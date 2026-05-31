@@ -42,6 +42,18 @@ public:
     virtual void display() const = 0;
     // Returns unique key used for movie lookup
     virtual string getKey() const = 0;
+
+    // Stock management
+bool borrow();
+
+void returnMovie();
+
+void increaseStock(int amount);
+
+// Comparison operators for sorting
+virtual bool operator<(const Movie& other) const = 0;
+
+virtual bool operator==(const Movie& other) const = 0;
 };
 
 #endif
