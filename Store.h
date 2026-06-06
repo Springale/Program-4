@@ -1,15 +1,31 @@
+// ------------------------------------------------ Store.h ------------------------------------------------
+//
+// Programmer: Lidia Workneh, Sam Pasarakonda
+// Course: CSS 343
+// Date: June 2026
+//
+// ---------------------------------------------------------------------------------------------------------
+// Purpose:
+// Defines the Store class, which serves as the central coordinator for the
+// movie rental system. The Store class manages customer records, inventory
+// initialization, and transaction processing.
+//
+// ---------------------------------------------------------------------------------------------------------
+// Notes:
+// - Maintains a hash table of customers for efficient lookup by customer ID.
+// - Owns and manages the Inventory object.
+// - Loads customer, movie, and command data from input files.
+// - Uses factory classes to create Movie and Transaction objects.
+// ---------------------------------------------------------------------------------------------------------
+
 #ifndef STORE_H
 #define STORE_H
 
 #include <string>
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 class Inventory;
-template <typename V> class HashTable;
 class Customer;
-class Transaction;
+template <typename V> class HashTable;
 
 class Store {
 private:

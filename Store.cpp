@@ -1,3 +1,24 @@
+// ------------------------------------------------ Store.cpp ----------------------------------------------
+//
+// Programmer: Lidia Workneh, Partner Name
+// Course: CSS 343
+// Date: June 2026
+//
+// ---------------------------------------------------------------------------------------------------------
+// Purpose:
+// Implements the Store class. Responsible for loading customer and movie
+// data, processing transaction commands, and coordinating interactions
+// between customers, inventory, and transactions.
+//
+// ---------------------------------------------------------------------------------------------------------
+// Notes:
+// - Uses MovieFactory to construct movie objects dynamically.
+// - Uses TransactionFactory to construct transaction objects dynamically.
+// - Inventory and customer records are allocated dynamically and released
+//   by the Store destructor.
+// - Error messages are displayed for invalid files and invalid commands.
+// ---------------------------------------------------------------------------------------------------------
+
 #include "Store.h"
 #include "Inventory.h"
 #include "HashTable.h" 
@@ -5,10 +26,10 @@
 #include "Transaction.h"
 #include "MovieFactory.h"
 #include "TransactionFactory.h"
+#include "Customer.h"
 
-Store::Store() {
-    inventory = new Inventory();
-    customerTable = new HashTable<Customer*>();
+Store::Store() : inventory(new Inventory()),
+      customerTable(new HashTable<Customer*>()) {
 }
 
 Store::~Store() {
@@ -41,7 +62,6 @@ void Store::loadCustomers(const std::string &filename) {
         std::string key = std::to_string(id);
         customerTable->insert(key, newCustomer);
     }
-    infile.close();
 }
 
 // load Movies from data4movies.txt
@@ -67,7 +87,6 @@ void Store::loadMovies(const std::string &filename) {
             std::cerr << "Parse Error: Skipping invalid movie entry line: " << line << std::endl;
         }
     }
-    infile.close();
 }
 
 // process Commands from data4commands.txt
@@ -102,7 +121,6 @@ void Store::processCommands(const std::string &filename) {
             // to avoid memory leaks.
         }
     }
-    infile.close();
 }
 
 // retrieve a customer from the HashTable
