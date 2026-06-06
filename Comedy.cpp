@@ -26,28 +26,37 @@ void Comedy::display() const {
 }
 
 string Comedy::getKey() const {
-
-    return title
-        + ","
-        + to_string(year);
+    return "F|" + title + "|" + to_string(year);
 }
 
 bool Comedy::operator<(const Movie& other) const {
 
-    const Comedy& c =
-        dynamic_cast<const Comedy&>(other);
+    const Comedy* c =
+        dynamic_cast<const Comedy*>(&other);
+        
+    if (!c) {
+        return false;
+    }
 
-    if(title != c.title)
-        return title < c.title;
+    if(title != c->title)
+        return title < c->title;
 
-    return year < c.year;
+    return year < c->year;
 }
 
 bool Comedy::operator==(const Movie& other) const {
 
-    const Comedy& c =
-        dynamic_cast<const Comedy&>(other);
+    const Comedy* c =
+        dynamic_cast<const Comedy*>(&other);
 
-    return title == c.title &&
-           year == c.year;
+    if (!c) { 
+        return false; 
+    }
+
+    return title == c->title &&
+           year == c->year;
+}
+
+char Comedy::getType() const {
+    return 'F';
 }

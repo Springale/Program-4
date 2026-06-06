@@ -10,6 +10,10 @@ class TransactionFactory {
 public:
     // reads a command line string, validates elements against the Store, and instantiates the correct Transaction subclass
     static Transaction* createTransaction(const std::string &line, Store &store);
+
+private:
+    // helper function
+    static std::string trimLeft(std::string s);
 };
 
 #endif 

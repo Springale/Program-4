@@ -37,6 +37,8 @@ public:
     string getDirector() const;
     string getTitle() const;
     int getYear() const;
+    
+    virtual char getType() const = 0;
 
     // Displays movie information
     virtual void display() const = 0;
@@ -49,6 +51,8 @@ bool borrow();
 void returnMovie();
 
 void increaseStock(int amount);
+
+void decreaseStock(int amount);
 
 // Comparison operators for sorting
 virtual bool operator<(const Movie& other) const = 0;

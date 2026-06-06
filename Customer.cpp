@@ -35,7 +35,9 @@ void Customer::displayHistory() const {
     // loop backwards so newest transactions appear first
     for (int i = static_cast<int>(history.size()) - 1; i >= 0; --i) {
         std::cout << "   ";
-        history[i]->display();
+        if (history[i]) {
+            history[i]->display();
+        }
     }
 }
 
@@ -45,17 +47,20 @@ void Customer::trackBorrow(const std::string &movieKey) {
 }
 
 // decrements active rental count for a movie
-void Customer::trackReturn(const std::string &movieKey) {
+bool Customer::trackReturn(const std::string &movieKey) {
     auto it = activeRentals.find(movieKey);
 
-    if (it != activeRentals.end()) {
-        it->second--;
-
-        // remove entry when no active copies remain
-        if (it->second <= 0) {
-            activeRentals.erase(it);
-        }
+    if (it == activeRentals.end() || it->second <= 0) {
+        return false; // invalid return
     }
+
+    it->second--;
+
+    if (it->second == 0) {
+        activeRentals.erase(it);
+    }
+
+    return true; // valid return
 }
 
 // returns true if the customer currently has this movie checked out

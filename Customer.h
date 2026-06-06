@@ -27,7 +27,7 @@ public:
     
     // return Validation helpers 
     void trackBorrow(const std::string &movieKey);   // increments the count for a borrowed movie key
-    void trackReturn(const std::string &movieKey);   // decrements the count for a returned movie key
+    bool trackReturn(const std::string &movieKey);   // decrements the count for a returned movie key
     bool hasBorrowed(const std::string &movieKey) const; // verifies if active rental count for a key is > 0
 
     // accessors

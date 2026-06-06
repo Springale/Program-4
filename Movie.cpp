@@ -41,5 +41,8 @@ void Movie::increaseStock(int amount){
 
     stock += amount;
 }
-
+void Movie::decreaseStock(int amount) {
+    stock -= amount;
+    if (stock < 0) stock = 0;
+}
  

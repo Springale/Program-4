@@ -33,6 +33,11 @@ void Borrow::execute(Store &store) {
     customer->addHistory(this);                     // save this transaction pointer in customer history
 }
 
+// display
+void Borrow::display() const {
+    std::cout << "borrow transaction" << std::endl;
+}
+
 // ==========================================
 // --- Return transaction subclass --- 
 
@@ -44,16 +49,20 @@ void Return::execute(Store &store) {
         return;
     }
 
-    // Professor's Feedback Fix: Check if customer actually has it checked out
-    if (!customer->hasBorrowed(movie->getKey())) {
-        std::cerr << "Return Error: Customer " << customer->getID() 
-                  << " did not borrow \"" << movie->getTitle() << "\"." << std::endl;
+    if (!customer->trackReturn(movie->getKey())) {
+        std::cerr << "Return Error: Customer " << customer->getID()
+                << " did not borrow \"" << movie->getTitle() << "\"." << std::endl;
         return;
     }
 
+    customer->trackReturn(movie->getKey());
     movie->increaseStock(1);                        // return item to inventory stock
-    customer->trackReturn(movie->getKey());         // decrement active borrow map count
     customer->addHistory(this);                     // save this transaction pointer in customer history
+}
+
+// display
+void Return::display() const {
+    std::cout << "return transaction" << std::endl;
 }
 
 // ==========================================
@@ -71,11 +80,21 @@ void History::execute(Store &store) {
     customer->displayHistory(); 
 }
 
+void History::display() const {
+    std::cout << "history transaction" << std::endl;
+}
+
 // ==========================================
 // --- Display inventory transaction subclass --- 
-
-DisplayInventory::DisplayInventory() : Transaction(nullptr, nullptr) {}
+DisplayInventory::DisplayInventory()
+    : Transaction(nullptr, nullptr) {}
 
 void DisplayInventory::execute(Store &store) {
-    store.getInventory()->displayInventory();
+    if (store.getInventory()) {
+        store.getInventory()->displayInventory();
+    }
+}
+
+void DisplayInventory::display() const {
+    std::cout << "display inventory transaction" << std::endl;
 }

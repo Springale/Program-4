@@ -21,6 +21,8 @@ public:
     bool operator<(const Movie& other) const override;
 
     bool operator==(const Movie& other) const override;
+
+    char getType() const override;
 };
 
 #endif
