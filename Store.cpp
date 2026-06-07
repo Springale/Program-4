@@ -1,30 +1,29 @@
-// ------------------------------------------------ Store.cpp ----------------------------------------------
-//
-// Programmer: Lidia Workneh, Sam Pasarakonda
-// Course: CSS 343
-// Date: June 2026
-//
-// ---------------------------------------------------------------------------------------------------------
-// Purpose:
-// Implements the Store class. Responsible for loading customer and movie
-// data, processing transaction commands, and coordinating interactions
-// between customers, inventory, and transactions.
-//
-// ---------------------------------------------------------------------------------------------------------
-// Notes:
-// - Uses MovieFactory to construct movie objects dynamically.
-// - Uses TransactionFactory to construct transaction objects dynamically.
-// - Inventory and customer records are allocated dynamically and released
-//   by the Store destructor.
-// - Error messages are displayed for invalid files and invalid commands.
-// ---------------------------------------------------------------------------------------------------------
+/*
+ * -----------------------------------------------------------------------------
+ * File: Store.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: June 2026
+ *
+ * Description:
+ * Implements the Store class. Responsible for loading customer and movie
+ * data, processing transaction commands, and coordinating interactions
+ * between customers, inventory, and transactions.
+ *
+ * Notes:
+ * - Uses MovieFactory to construct movie objects dynamically.
+ * - Uses TransactionFactory to construct transaction objects dynamically.
+ * - Inventory and customer records are allocated dynamically and released
+ *   by the Store destructor.
+ * - Error messages are displayed for invalid files and invalid commands.
+ * -----------------------------------------------------------------------------
+ */
 
 #include "Store.h"
-
 #include "Comedy.h"
 #include "Drama.h"
 #include "Classic.h"
-
 #include "Movie.h"
 #include "Transaction.h"
 #include "MovieFactory.h"
@@ -32,7 +31,6 @@
 #include "Customer.h"
 #include "Inventory.h"
 #include "HashTable.h"
-
 #include <fstream>
 #include <iostream>
 
@@ -41,10 +39,16 @@ Store::Store()
     : inventory(new Inventory()),
       customerTable(new HashTable<Customer*>()) {}
 
-// destructor
+// destructor - cleans up all dynamically allocated memory
 Store::~Store() {
-    delete inventory;
+    // Delete all Customer objects stored in the hash table
+    customerTable->deleteAllValues();
+    
+    // Delete the hash table itself
     delete customerTable;
+    
+    // Delete inventory (which deletes all Movie objects)
+    delete inventory;
 }
 
 // reads customer information from a file and stores customers in the hash table
@@ -171,8 +175,11 @@ void Store::processCommands(const std::string &filename)
 
         if (trans != nullptr)
         {
-            bool ownedByCustomer = trans->execute(*this);
-            if (!ownedByCustomer)
+            trans->execute(*this);
+
+            // only delete temporary display-type transactions
+            if (dynamic_cast<History*>(trans) != nullptr ||
+                dynamic_cast<DisplayInventory*>(trans) != nullptr)
             {
                 delete trans;
             }
