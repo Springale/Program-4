@@ -17,22 +17,15 @@
 
 using namespace std;
 
-// ==========================================
-// Constructor -  passes all parameters to Movie base class
-// ==========================================
 Comedy::Comedy(
     int stock,
     string director,
     string title,
     int year
 )
-: Movie(stock, director, title, year)  // Base class handles stock/director/title/year
+: Movie(stock, director, title, year)
 {}
 
-// ==========================================
-// display - prints Comedy movie information
-// Format: title year Stock:stock
-// ==========================================
 void Comedy::display() const {
     cout
         << title
@@ -43,42 +36,22 @@ void Comedy::display() const {
         << endl;
 }
 
-// ==========================================
-// getKey - generates unique identifier for hash map lookup
-// Format: F|title|year
-// 
-// ==========================================
 string Comedy::getKey() const {
     return "F|" + title + "|" + to_string(year);
 }
 
-// ==========================================
-// operator< - defines sorting order for Comedies
-// 
-// Sorting priority:
-// 1. Title (alphabetical order - A comes before B)
-// 2. Year (chronological - older comes before newer within same title)
-// 
-// ==========================================
 bool Comedy::operator<(const Movie& other) const {
     const Comedy* c = dynamic_cast<const Comedy*>(&other);
     if (!c) {
-        return false;  // Can't compare Comedy with non-Comedy
+        return false;
     }
 
-    // PRIMARY SORT: Compare by title first
-    if (title != c->title) {
+    if(title != c->title)
         return title < c->title;
-    }
 
-    // SECONDARY SORT: If titles are equal, compare by year
     return year < c->year;
 }
 
-// ==========================================
-// operator== - checks if two Comedy movies are identical
-// 
-// ==========================================
 bool Comedy::operator==(const Movie& other) const {
     const Comedy* c = dynamic_cast<const Comedy*>(&other);
     if (!c) { 
@@ -89,10 +62,6 @@ bool Comedy::operator==(const Movie& other) const {
            year == c->year;
 }
 
-// ==========================================
-// getType - returns genre code for Comedy ('F' for "funny")
-// ==========================================
 char Comedy::getType() const {
     return 'F';
 }
- 
