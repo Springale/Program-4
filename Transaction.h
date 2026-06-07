@@ -13,13 +13,11 @@
  * are owned by the Customer's history after execution.
  * -----------------------------------------------------------------------------
  */
-
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
 #include <string>
 
-// forward declarations
 class Store;
 class Customer;
 class Movie;
@@ -27,16 +25,20 @@ class Movie;
 class Transaction {
 protected:
     Customer* customer; 
-    Movie* movie;       
+    Movie* movie;
+    bool success;  // tracks if execute() completed successfully
 
 public:
-    // constructor & destructor
-    Transaction(Customer* c = nullptr, Movie* m = nullptr);
-    virtual ~Transaction();
+    Transaction(Customer* c = nullptr, Movie* m = nullptr) 
+        : customer(c), movie(m), success(false) {}
+    
+    virtual ~Transaction() {}
 
-    // Returns true if the customer took ownership (success), false if the caller must delete.
-    virtual bool execute(Store &store) = 0;
+    virtual void execute(Store &store) = 0; 
     virtual void display() const = 0;
+    
+    bool wasSuccessful() const { return success; }
+    void setSuccess(bool val) { success = val; }
 };
 
 // --- subclasses ---
