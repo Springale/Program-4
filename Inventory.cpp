@@ -1,4 +1,20 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Inventory.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Implements the Inventory class. Movies are inserted in sorted order into
+ * genre-specific vectors and indexed by key in a hash map for O(1) lookup.
+ * Duplicate Classic entries with the same key merge their stock counts.
+ * -----------------------------------------------------------------------------
+ */
+
 #include "Inventory.h"
+#include "Classic.h"
 #include <iostream>
 
 // constructor
@@ -29,12 +45,12 @@ void Inventory::addMovie(Movie* movie) {
 
     std::string key = movie->getKey();
 
-    // 🔥 CHECK DUPLICATE
+    // check duplicate
     auto it = movieMap.find(key);
 
     if (it != movieMap.end()) {
 
-        // movie already exists → increase stock only
+        // if movie already exists, increase stock only
         it->second->increaseStock(movie->getStock());
 
         delete movie;
@@ -65,6 +81,17 @@ Movie* Inventory::getMovieByKey(const std::string& key) const {
     }
 
     return it->second;
+}
+
+std::vector<Movie*> Inventory::getClassicAlternatives(const std::string& title,
+                                                       const std::string& excludeKey) const {
+    std::vector<Movie*> results;
+    for (Movie* m : classics) {
+        if (m->getTitle() == title && m->getKey() != excludeKey && m->getStock() > 0) {
+            results.push_back(m);
+        }
+    }
+    return results;
 }
 
 void Inventory::displayInventory() const {

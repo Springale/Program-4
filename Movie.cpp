@@ -1,3 +1,17 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Movie.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Implements the Movie base class. Provides shared constructor, accessors,
+ * and stock management methods (increaseStock, decreaseStock) used by all
+ * movie genre subclasses.
+ * -----------------------------------------------------------------------------
+ */
 #include "Movie.h"
 
 Movie::Movie(int stock, string director, string title, int year)

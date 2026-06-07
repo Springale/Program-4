@@ -1,3 +1,17 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Drama.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: June 2026
+ *
+ * Description:
+ * Implements the Drama class. Dramas are sorted by director then title,
+ * and their lookup key is formatted as D + director + title.
+ * -----------------------------------------------------------------------------
+ */
+
 #include "Drama.h"
 
 #include <iostream>

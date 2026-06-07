@@ -1,3 +1,17 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Comedy.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: June 2026
+ *
+ * Description:
+ * Implements the Comedy class. Comedies are sorted by title then year,
+ * and their lookup key is formatted as F|title|year.
+ * -----------------------------------------------------------------------------
+ */
+ 
 #include "Comedy.h"
 
 #include <iostream>

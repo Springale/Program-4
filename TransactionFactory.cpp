@@ -1,3 +1,19 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: TransactionFactory.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Implements the TransactionFactory class. Parses each command line token
+ * by token, validates the customer ID, media type, genre code, and movie
+ * existence, then constructs and returns the appropriate Transaction object.
+ * Returns nullptr and prints an error for any invalid input.
+ * -----------------------------------------------------------------------------
+ */
+ 
 #include "TransactionFactory.h"
 #include "Transaction.h"
 #include "Store.h"

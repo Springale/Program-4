@@ -1,3 +1,19 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Customer.h
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Defines the Customer class, which represents a store member identified
+ * by a unique 4-digit ID. Tracks borrow/return transaction history and
+ * maintains a count of active rentals per movie key to validate returns.
+ * History is displayed in reverse chronological order (newest first).
+ * -----------------------------------------------------------------------------
+ */
+ 
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 

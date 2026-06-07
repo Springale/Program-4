@@ -63,7 +63,6 @@ void Store::loadCustomers(const std::string& filename)
 
     while (file >> id >> lastName >> firstName)
     {
-        // fix: file format is id lastName firstName
         Customer* newCustomer = new Customer(id, lastName, firstName);
 
         std::string key = std::to_string(id);

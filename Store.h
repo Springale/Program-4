@@ -47,8 +47,8 @@ public:
     void processCommands(const std::string &filename);
 
     // helper functions
-    Customer* getCustomer(int id) const; // Retrieves a specific customer using their ID
-    Inventory* getInventory() const;     // Returns a pointer to the inventory for stock adjustments
+    Customer* getCustomer(int id) const; // retrieves a specific customer using their ID
+    Inventory* getInventory() const;     // returns a pointer to the inventory for stock adjustments
 };
 
 #endif

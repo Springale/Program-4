@@ -1,9 +1,25 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Transaction.h
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Defines the Transaction abstract base class and its four concrete subclasses:
+ * Borrow, Return, History, and DisplayInventory. Each subclass implements
+ * execute() to carry out the corresponding store operation. Borrow and Return
+ * are owned by the Customer's history after execution.
+ * -----------------------------------------------------------------------------
+ */
+
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
 #include <string>
 
-// Forward declarations
+// forward declarations
 class Store;
 class Customer;
 class Movie;

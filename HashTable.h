@@ -1,3 +1,19 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: HashTable.h
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: June 2026
+ *
+ * Description:
+ * Defines a generic hash table template class that maps string keys to
+ * values of type V. Uses chaining (linked lists) to handle collisions.
+ * Provides O(1) average-case insert, find, and remove operations.
+ * Used by Store to look up customers by ID in constant time.
+ * -----------------------------------------------------------------------------
+ */
+
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 

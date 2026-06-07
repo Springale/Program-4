@@ -1,3 +1,17 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Comedy.h
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Defines the Comedy class, a subclass of Movie.
+ * Comedies are identified by the genre code 'F' (funny) and are
+ * sorted by title, then release year.
+ * -----------------------------------------------------------------------------
+ */
 #ifndef COMEDY_H
 #define COMEDY_H
 

@@ -1,3 +1,18 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: MovieFactory.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Implements the MovieFactory class. Reads a formatted movie line and
+ * constructs the correct Movie subclass based on the genre code.
+ * Invalid genre codes are rejected with an error message.
+ * -----------------------------------------------------------------------------
+ */
+ 
 #include "MovieFactory.h"
 
 #include "Movie.h"

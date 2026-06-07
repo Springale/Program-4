@@ -1,3 +1,18 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Customer.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: May 2026
+ *
+ * Description:
+ * Implements the Customer class. Manages transaction history and active
+ * rental tracking. History is displayed newest-first. Returns are only
+ * valid if the customer currently has that movie checked out.
+ * -----------------------------------------------------------------------------
+ */
+ 
 #include "Customer.h"
 #include "Transaction.h"
 #include <iostream>

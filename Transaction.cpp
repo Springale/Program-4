@@ -1,7 +1,24 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Transaction.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: June 2026
+ *
+ * Description:
+ * Implements the Transaction subclasses. Borrow decreases stock and records
+ * the rental. Return validates the customer borrowed the movie, restores
+ * stock, and suggests in-stock Classic alternatives when out of stock.
+ * History and DisplayInventory print records without modifying state.
+ * -----------------------------------------------------------------------------
+ */
+
 #include "Transaction.h"
 #include "Store.h"
 #include "Customer.h"
 #include "Movie.h"
+#include "Classic.h"
 #include "Inventory.h"
 #include <iostream>
 
@@ -12,7 +29,7 @@ Transaction::Transaction(Customer* c, Movie* m) : customer(c), movie(m) {}
 Transaction::~Transaction() {}
 
 // ==========================================
-// --- Borrow transaction subclass --- 
+// Borrow subclass 
 
 Borrow::Borrow(Customer* c, Movie* m) : Transaction(c, m) {}
 
@@ -24,7 +41,22 @@ void Borrow::execute(Store &store) {
 
     // check if the movie is available
     if (movie->getStock() <= 0) {
-        std::cerr << "Borrow Error: \"" << movie->getTitle() << "\" is out of stock." << std::endl;
+        std::cerr << "Borrow Error: \"" << movie->getTitle() << "\" ("
+                  << movie->getKey() << ") is out of stock.\n";
+
+        if (movie->getType() == 'C') {
+            auto alts = store.getInventory()->getClassicAlternatives(
+                movie->getTitle(), movie->getKey());
+            if (!alts.empty()) {
+                std::cerr << "  Available versions of \"" << movie->getTitle() << "\":\n";
+                for (Movie* alt : alts) {
+                    Classic* c = dynamic_cast<Classic*>(alt);
+                    std::cerr << "    - " << c->getActor()
+                              << " (" << c->getMonth() << "/" << c->getYear() << ")"
+                              << " — " << c->getStock() << " in stock\n";
+                }
+            }
+        }
         return;
     }
 
@@ -39,7 +71,7 @@ void Borrow::display() const {
 }
 
 // ==========================================
-// --- Return transaction subclass --- 
+// Return subclass 
 
 Return::Return(Customer* c, Movie* m) : Transaction(c, m) {}
 
@@ -55,7 +87,6 @@ void Return::execute(Store &store) {
         return;
     }
 
-    customer->trackReturn(movie->getKey());
     movie->increaseStock(1);                        // return item to inventory stock
     customer->addHistory(this);                     // save this transaction pointer in customer history
 }
@@ -66,7 +97,7 @@ void Return::display() const {
 }
 
 // ==========================================
-// --- History transaction subclass --- 
+// History subclass 
 
 History::History(Customer* c) : Transaction(c, nullptr) {}
 
@@ -85,7 +116,7 @@ void History::display() const {
 }
 
 // ==========================================
-// --- Display inventory transaction subclass --- 
+// Display inventory subclass
 DisplayInventory::DisplayInventory()
     : Transaction(nullptr, nullptr) {}
 

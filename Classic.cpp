@@ -1,3 +1,18 @@
+/*
+ * -----------------------------------------------------------------------------
+ * File: Classic.cpp
+ * Author: Lidia Workneh, Sam Pasarakonda
+ * Course: CSS 343
+ * Assignment: Program 4 - Movie Rental Store
+ * Date: June 2026
+ *
+ * Description:
+ * Implements the Classic class. Classics are sorted by year, then month,
+ * then major actor. Each actor/date combination is a separate entry with
+ * its own stock. Lookup key is formatted as C|month|year|actor.
+ * -----------------------------------------------------------------------------
+ */
+
 #include "Classic.h"
 
 #include <iostream>
@@ -78,4 +93,12 @@ bool Classic::operator==(
 
 char Classic::getType() const {
     return 'C';
+}
+
+std::string Classic::getActor() const {
+    return actor;
+}
+
+int Classic::getMonth() const {
+    return month;
 }
