@@ -55,7 +55,8 @@ public:
 
     /*
      * Comparison operator for sorting Classics
-     * Sorts by: year -> month -> actor 
+     * Sorts by: year -> month -> actor (lexicographically)
+     * This matches the assignment specification exactly
      */
     bool operator<(
         const Movie& other
