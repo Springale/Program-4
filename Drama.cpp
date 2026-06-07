@@ -1,6 +1,3 @@
-Here's the improved Drama.cpp with Lidia's thorough commenting style:
-
-```cpp
 /*
  * -----------------------------------------------------------------------------
  * File: Drama.cpp
