@@ -110,4 +110,3 @@ bool Drama::operator==(
 char Drama::getType() const {
     return 'D';
 }
-```
