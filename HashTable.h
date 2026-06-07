@@ -39,6 +39,15 @@ private:
 public:
     HashTable() : table(TABLE_SIZE) {}
 
+    // V must be a pointer type — deletes every stored value.
+    ~HashTable() {
+        for (auto& bucket : table) {
+            for (auto& pair : bucket) {
+                delete pair.second;
+            }
+        }
+    }
+
     void insert(const std::string& key, V value) {
         int idx = hash(key);
 
