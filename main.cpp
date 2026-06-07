@@ -15,6 +15,10 @@
  * -----------------------------------------------------------------------------
  */
 
+ // NOTE: Instead of manually tracing all file data and relationships, 
+ // used AI to quickly understand what values and scenarios should be validated 
+ // (for example: valid customer IDs, invalid cases, and expected movie keys from the dataset).
+
 #include "Store.h"
 #include "Inventory.h"
 #include "Customer.h"
@@ -45,6 +49,8 @@ void section(const string& name) {
     cout << "\n=== " << name << " ===\n";
 }
 
+
+// written with the help of claude ai
 // redirects cerr into a string buffer so we can check if an error was printed
 struct CerrCapture {
     streambuf* orig;
@@ -63,7 +69,8 @@ struct CerrCapture {
     }
 };
 
-// same idea but for cout - lets us inspect what got printed
+// written with the help of claude ai
+// lets us inspect what got printed
 struct CoutCapture {
     streambuf* orig;
     ostringstream buf;
