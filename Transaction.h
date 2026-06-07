@@ -4,7 +4,7 @@
  * Author: Lidia Workneh, Sam Pasarakonda
  * Course: CSS 343
  * Assignment: Program 4 - Movie Rental Store
- * Date: May 2026
+ * Date: June 2026
  *
  * Description:
  * Defines the Transaction abstract base class and its four concrete subclasses:
@@ -27,16 +27,20 @@ class Movie;
 class Transaction {
 protected:
     Customer* customer; 
-    Movie* movie;       
+    Movie* movie;
+    bool success;  // tracks if execute() completed successfully
 
 public:
     // constructor & destructor
     Transaction(Customer* c = nullptr, Movie* m = nullptr);
     virtual ~Transaction();
 
-    // Returns true if the customer took ownership (success), false if the caller must delete.
-    virtual bool execute(Store &store) = 0;
+    // pure virtual function executed by subclasses
+    virtual void execute(Store &store) = 0; 
     virtual void display() const = 0;
+    
+    bool wasSuccessful() const { return success; }
+    void setSuccess(bool val) { success = val; }
 };
 
 // --- subclasses ---
@@ -44,28 +48,28 @@ public:
 class Borrow : public Transaction {
 public:
     Borrow(Customer* c, Movie* m);
-    bool execute(Store &store) override;
+    void execute(Store &store) override;
     void display() const override;
 };
 
 class Return : public Transaction {
 public:
     Return(Customer* c, Movie* m);
-    bool execute(Store &store) override;
+    void execute(Store &store) override;
     void display() const override;
 };
 
 class History : public Transaction {
 public:
     History(Customer* c);
-    bool execute(Store &store) override;
+    void execute(Store &store) override;
     void display() const override;
 };
 
 class DisplayInventory : public Transaction {
 public:
     DisplayInventory();
-    bool execute(Store &store) override;
+    void execute(Store &store) override;
     void display() const override;
 };
 

@@ -23,7 +23,7 @@
 #include <iostream>
 
 // constructor
-Transaction::Transaction(Customer* c, Movie* m) : customer(c), movie(m) {}
+Transaction::Transaction(Customer* c, Movie* m) : customer(c), movie(m), success(false) {}
 
 // virtual destructor
 Transaction::~Transaction() {}
@@ -33,10 +33,10 @@ Transaction::~Transaction() {}
 
 Borrow::Borrow(Customer* c, Movie* m) : Transaction(c, m) {}
 
-bool Borrow::execute(Store &store) {
+void Borrow::execute(Store &store) {
     if (customer == nullptr || movie == nullptr) {
         std::cerr << "Borrow Error: Missing customer or movie reference." << std::endl;
-        return false;
+        return;
     }
 
     // check if the movie is available
@@ -57,16 +57,15 @@ bool Borrow::execute(Store &store) {
                 }
             }
         }
-        return false;
+        return;
     }
 
-    movie->decreaseStock(1);                        // reduce inventory count
-    customer->trackBorrow(movie->getKey());         // add to customer's active borrows map
-    customer->addHistory(this);                     // save this transaction pointer in customer history
-    return true;
+    movie->decreaseStock(1);
+    customer->trackBorrow(movie->getKey());
+    customer->addHistory(this);
+    success = true;
 }
 
-// display
 void Borrow::display() const {
     std::cout << "borrow transaction" << std::endl;
 }
@@ -76,24 +75,23 @@ void Borrow::display() const {
 
 Return::Return(Customer* c, Movie* m) : Transaction(c, m) {}
 
-bool Return::execute(Store &store) {
+void Return::execute(Store &store) {
     if (customer == nullptr || movie == nullptr) {
         std::cerr << "Return Error: Missing customer or movie reference." << std::endl;
-        return false;
+        return;
     }
 
     if (!customer->trackReturn(movie->getKey())) {
         std::cerr << "Return Error: Customer " << customer->getID()
                 << " did not borrow \"" << movie->getTitle() << "\"." << std::endl;
-        return false;
+        return;
     }
 
-    movie->increaseStock(1);                        // return item to inventory stock
-    customer->addHistory(this);                     // save this transaction pointer in customer history
-    return true;
+    movie->increaseStock(1);
+    customer->addHistory(this);
+    success = true;
 }
 
-// display
 void Return::display() const {
     std::cout << "return transaction" << std::endl;
 }
@@ -103,13 +101,14 @@ void Return::display() const {
 
 History::History(Customer* c) : Transaction(c, nullptr) {}
 
-bool History::execute(Store &store) {
+void History::execute(Store &store) {
     if (customer == nullptr) {
         std::cerr << "History Error: Customer account does not exist." << std::endl;
-        return false;
+        return;
     }
+    
     customer->displayHistory();
-    return false;
+    success = true;
 }
 
 void History::display() const {
@@ -121,11 +120,11 @@ void History::display() const {
 DisplayInventory::DisplayInventory()
     : Transaction(nullptr, nullptr) {}
 
-bool DisplayInventory::execute(Store &store) {
+void DisplayInventory::execute(Store &store) {
     if (store.getInventory()) {
         store.getInventory()->displayInventory();
+        success = true;
     }
-    return false;
 }
 
 void DisplayInventory::display() const {
