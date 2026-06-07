@@ -95,7 +95,4 @@ bool Comedy::operator==(const Movie& other) const {
 char Comedy::getType() const {
     return 'F';
 }
-
-char Comedy::getType() const {
-    return 'F';
-}
+ 
