@@ -46,18 +46,14 @@ public:
     virtual string getKey() const = 0;
 
     // Stock management
-bool borrow();
+    bool borrow();
+    void returnMovie();
+    void increaseStock(int amount);
+    void decreaseStock(int amount);
 
-void returnMovie();
-
-void increaseStock(int amount);
-
-void decreaseStock(int amount);
-
-// Comparison operators for sorting
-virtual bool operator<(const Movie& other) const = 0;
-
-virtual bool operator==(const Movie& other) const = 0;
+    // Comparison operators for sorting
+    virtual bool operator<(const Movie& other) const = 0;
+    virtual bool operator==(const Movie& other) const = 0;
 };
 
 #endif

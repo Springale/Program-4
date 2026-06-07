@@ -33,10 +33,10 @@ Transaction::~Transaction() {}
 
 Borrow::Borrow(Customer* c, Movie* m) : Transaction(c, m) {}
 
-void Borrow::execute(Store &store) {
+bool Borrow::execute(Store &store) {
     if (customer == nullptr || movie == nullptr) {
         std::cerr << "Borrow Error: Missing customer or movie reference." << std::endl;
-        return;
+        return false;
     }
 
     // check if the movie is available
@@ -57,12 +57,13 @@ void Borrow::execute(Store &store) {
                 }
             }
         }
-        return;
+        return false;
     }
 
     movie->decreaseStock(1);                        // reduce inventory count
     customer->trackBorrow(movie->getKey());         // add to customer's active borrows map
     customer->addHistory(this);                     // save this transaction pointer in customer history
+    return true;
 }
 
 // display
@@ -75,20 +76,21 @@ void Borrow::display() const {
 
 Return::Return(Customer* c, Movie* m) : Transaction(c, m) {}
 
-void Return::execute(Store &store) {
+bool Return::execute(Store &store) {
     if (customer == nullptr || movie == nullptr) {
         std::cerr << "Return Error: Missing customer or movie reference." << std::endl;
-        return;
+        return false;
     }
 
     if (!customer->trackReturn(movie->getKey())) {
         std::cerr << "Return Error: Customer " << customer->getID()
                 << " did not borrow \"" << movie->getTitle() << "\"." << std::endl;
-        return;
+        return false;
     }
 
     movie->increaseStock(1);                        // return item to inventory stock
     customer->addHistory(this);                     // save this transaction pointer in customer history
+    return true;
 }
 
 // display
@@ -101,14 +103,13 @@ void Return::display() const {
 
 History::History(Customer* c) : Transaction(c, nullptr) {}
 
-void History::execute(Store &store) {
-    // check if customer exists
+bool History::execute(Store &store) {
     if (customer == nullptr) {
         std::cerr << "History Error: Customer account does not exist." << std::endl;
-        return;
+        return false;
     }
-    
-    customer->displayHistory(); 
+    customer->displayHistory();
+    return false;
 }
 
 void History::display() const {
@@ -120,10 +121,11 @@ void History::display() const {
 DisplayInventory::DisplayInventory()
     : Transaction(nullptr, nullptr) {}
 
-void DisplayInventory::execute(Store &store) {
+bool DisplayInventory::execute(Store &store) {
     if (store.getInventory()) {
         store.getInventory()->displayInventory();
     }
+    return false;
 }
 
 void DisplayInventory::display() const {

@@ -1,6 +1,6 @@
 // ------------------------------------------------ Store.cpp ----------------------------------------------
 //
-// Programmer: Lidia Workneh, Partner Name
+// Programmer: Lidia Workneh, Sam Pasarakonda
 // Course: CSS 343
 // Date: June 2026
 //
@@ -63,7 +63,7 @@ void Store::loadCustomers(const std::string& filename)
 
     while (file >> id >> lastName >> firstName)
     {
-        Customer* newCustomer = new Customer(id, lastName, firstName);
+        Customer* newCustomer = new Customer(id, firstName, lastName);
 
         std::string key = std::to_string(id);
         customerTable->insert(key, newCustomer);
@@ -171,11 +171,8 @@ void Store::processCommands(const std::string &filename)
 
         if (trans != nullptr)
         {
-            trans->execute(*this);
-
-            // only delete temporary display-type transactions
-            if (dynamic_cast<History*>(trans) != nullptr ||
-                dynamic_cast<DisplayInventory*>(trans) != nullptr)
+            bool ownedByCustomer = trans->execute(*this);
+            if (!ownedByCustomer)
             {
                 delete trans;
             }
